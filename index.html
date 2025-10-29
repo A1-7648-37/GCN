@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>GCN回响 - 全域通讯枢纽</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&family=Exo+2:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta name="theme-color" content="#00f3ff">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="manifest" href="manifest.json">
+</head>
+<body>
+    <!-- 动态科技背景 -->
+    <div class="cyber-background">
+        <div class="grid-lines"></div>
+        <div class="floating-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+            <div class="shape shape-4"></div>
+        </div>
+        <div class="particles" id="particles"></div>
+        <div class="scan-line"></div>
+        <div class="quantum-rings">
+            <div class="quantum-ring ring-1"></div>
+            <div class="quantum-ring ring-2"></div>
+            <div class="quantum-ring ring-3"></div>
+        </div>
+        <div class="quantum-entanglements"></div>
+    </div>
+
+    <!-- 系统加载屏幕 - 已修改为隐藏 -->
+    <div id="loading-screen" class="loading-screen hidden">
+        <div class="quantum-loader">
+            <div class="quantum-spinner"></div>
+            <div class="loader-text">通讯系统启动中...</div>
+            <div class="loader-progress">
+                <div class="progress-bar"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="app">
+        <!-- 登录/注册页面 - 已修改为默认显示 -->
+        <div id="auth-container" class="container active">
+            <div class="auth-card">
+                <div class="cyber-border"></div>
+                <div class="hacker-terminal">
+                    <div class="terminal-line">> 启动通讯系统...</div>
+                    <div class="terminal-line">> 初始化身份验证模块...</div>
+                    <div class="terminal-line">> 生成数字身份ID...</div>
+                    <div class="terminal-line" id="id-generation-line">> 准备生成8位数字ID...</div>
+                </div>
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-satellite-dish"></i>
+                        <div class="logo-pulse"></div>
+                    </div>
+                    <h1>GCN回响</h1>
+                    <p class="tagline">全域通讯系统</p>
+                </div>
+                
+                <div class="auth-tabs">
+                    <button class="tab-btn cyber-tab active" data-tab="login" id="login-tab-btn">
+                        <span class="tab-glow"></span>
+                        <i class="fas fa-terminal"></i>
+                        <span>系统登录</span>
+                    </button>
+                    <button class="tab-btn cyber-tab" data-tab="signup" id="signup-tab-btn">
+                        <span class="tab-glow"></span>
+                        <i class="fas fa-user-plus"></i>
+                        <span>注册身份</span>
+                    </button>
+                </div>
+                
+                <div id="login-form" class="auth-form active">
+                    <div class="input-group">
+                        <i class="fas fa-id-card"></i>
+                        <input type="text" id="login-numeric-id" placeholder="8位数字ID" required maxlength="8" inputmode="numeric" pattern="[0-9]{8}">
+                        <div class="input-scan"></div>
+                    </div>
+                    <div class="input-group">
+                        <i class="fas fa-key"></i>
+                        <input type="password" id="login-password" placeholder="密钥" required minlength="6">
+                        <div class="input-scan"></div>
+                    </div>
+                    <div class="auth-options">
+                        <label class="cyber-checkbox">
+                            <input type="checkbox" id="remember-me">
+                            <span class="checkmark"></span>
+                            <span>记住此设备</span>
+                        </label>
+                        <a href="#" class="forgot-password" id="forgot-password-link">忘记密钥？</a>
+                    </div>
+                    <button id="login-btn" class="cyber-btn primary">
+                        <span class="btn-glow"></span>
+                        <i class="fas fa-sign-in-alt"></i>
+                        <span>验证身份</span>
+                    </button>
+                    <div class="anonymous-login-section">
+                        <div class="divider">
+                            <span>或</span>
+                        </div>
+                        <button id="anonymous-login-btn" class="cyber-btn secondary">
+                            <span class="btn-glow"></span>
+                            <i class="fas fa-user-secret"></i>
+                            <span>匿名临时会话</span>
+                        </button>
+                        <p class="anonymous-hint">无需注册，立即开始加密通讯</p>
+                    </div>
+                </div>
+                
+                <div id="signup-form" class="auth-form">
+                    <div class="input-group">
+                        <i class="fas fa-user-astronaut"></i>
+                        <input type="text" id="signup-username" placeholder="创建用户昵称" required maxlength="20" minlength="2">
+                        <div class="input-scan"></div>
+                    </div>
+                    <div class="input-group">
+                        <i class="fas fa-key"></i>
+                        <input type="password" id="signup-password" placeholder="设置密钥（至少6位）" required minlength="6">
+                        <div class="input-scan"></div>
+                    </div>
+                    <div class="input-group">
+                        <i class="fas fa-shield-alt"></i>
+                        <input type="password" id="signup-confirm-password" placeholder="确认密钥" required minlength="6">
+                        <div class="input-scan"></div>
+                    </div>
+                    <div class="password-strength">
+                        <div class="strength-bar">
+                            <div class="strength-fill" id="password-strength-fill"></div>
+                        </div>
+                        <span class="strength-text" id="password-strength-text">密钥强度</span>
+                    </div>
+                    <div class="generated-id-display">
+                        <i class="fas fa-qrcode"></i>
+                        <span>您的数字ID: </span>
+                        <strong id="generated-numeric-id">等待生成...</strong>
+                        <button id="refresh-id-btn" class="cyber-icon-btn small" title="重新生成ID">
+                            <i class="fas fa-sync-alt"></i>
+                        </button>
+                    </div>
+                    <div class="terms-agreement">
+                        <label class="cyber-checkbox">
+                            <input type="checkbox" id="agree-terms" required>
+                            <span class="checkmark"></span>
+                            <span>我同意 <a href="#" class="terms-link" id="terms-link">服务条款</a> 和 <a href="#" class="terms-link" id="privacy-link">隐私政策</a></span>
+                        </label>
+                    </div>
+                    <button id="signup-btn" class="cyber-btn primary">
+                        <span class="btn-glow"></span>
+                        <i class="fas fa-user-shield"></i>
+                        <span>创建加密身份</span>
+                    </button>
+                </div>
+                
+                <div id="auth-message" class="cyber-message"></div>
+                
+                <div class="system-status">
+                    <div class="status-item">
+                        <div class="status-indicator online"></div>
+                        <span>网络</span>
+                    </div>
+                    <div class="status-item">
+                        <div class="status-indicator secure"></div>
+                        <span>加密</span>
+                    </div>
+                    <div class="status-item">
+                        <div class="status-indicator sync"></div>
+                        <span>同步</span>
+                    </div>
+                </div>
+
+                <div class="cloudflare-notice">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>受 Cloudflare 安全保护</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 主聊天界面 -->
+        <div id="chat-container" class="container hidden">
+            <!-- 移动端顶部栏 -->
+            <div class="mobile-header">
+                <button id="mobile-menu-btn" class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="mobile-title">
+                    <h3 id="mobile-chat-title">GCN回响</h3>
+                    <div class="mobile-status" id="mobile-status">在线</div>
+                </div>
+                <button id="mobile-info-btn" class="mobile-info-btn">
+                    <i class="fas fa-info-circle"></i>
+                </button>
+            </div>
+            
+            <!-- 侧边栏 -->
+            <div id="sidebar" class="sidebar">
+                <div class="cyber-sidebar-border"></div>
+                <div class="sidebar-header">
+                    <div class="user-info">
+                        <div class="avatar-container">
+                            <img id="user-avatar" src="https://ui-avatars.com/api/?name=User&background=0D8ABC&color=fff" alt="用户头像">
+                            <div class="online-status" id="user-status"></div>
+                            <div class="status-ring"></div>
+                        </div>
+                        <div class="user-details">
+                            <span id="username" class="username">用户</span>
+                            <span class="user-numeric-id" id="user-numeric-id">ID: 加载中...</span>
+                            <span class="user-anonymous-badge hidden" id="anonymous-badge">匿名</span>
+                        </div>
+                    </div>
+                    <div class="user-actions">
+                        <button id="edit-profile-btn" class="cyber-icon-btn" title="编辑资料">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button id="status-btn" class="cyber-icon-btn" title="状态设置">
+                            <i class="fas fa-wifi"></i>
+                        </button>
+                        <button id="logout-btn" class="cyber-icon-btn" title="安全退出">
+                            <i class="fas fa-power-off"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="search-bar">
+                    <div class="search-container">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="search-input" placeholder="搜索用户ID或名称...">
+                        <button id="search-btn" class="cyber-search-btn">
+                            <i class="fas fa-bolt"></i>
+                        </button>
+                    </div>
+                    <!-- 新增搜索选项 -->
+                    <div class="search-options">
+                        <label class="cyber-checkbox">
+                            <input type="radio" name="search-type" value="username" checked>
+                            <span class="checkmark radio"></span>
+                            <span>搜索用户名</span>
+                        </label>
+                        <label class="cyber-checkbox">
+                            <input type="radio" name="search-type" value="id">
+                            <span class="checkmark radio"></span>
+                            <span>搜索数字ID</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="tabs">
+                    <button class="tab-btn cyber-tab active" data-tab="friends" id="friends-tab-btn">
+                        <i class="fas fa-network-wired"></i>
+                        <span>连接</span>
+                        <span class="tab-badge" id="friends-badge">0</span>
+                    </button>
+                    <button class="tab-btn cyber-tab" data-tab="groups" id="groups-tab-btn">
+                        <i class="fas fa-broadcast-tower"></i>
+                        <span>群组频道</span>
+                        <span class="tab-badge" id="groups-badge">0</span>
+                    </button>
+                    <button class="tab-btn cyber-tab" data-tab="requests" id="requests-tab-btn">
+                        <i class="fas fa-user-lock"></i>
+                        <span>身份验证</span>
+                        <span class="tab-badge" id="requests-badge">0</span>
+                    </button>
+                </div>
+                
+                <div class="tab-content">
+                    <div id="friends-tab" class="tab-panel active">
+                        <div class="list-header">
+                            <h3>通讯录</h3>
+                            <button id="add-friend-btn" class="cyber-icon-btn" title="建立新连接">
+                                <i class="fas fa-qrcode"></i>
+                            </button>
+                        </div>
+                        <div id="friends-list" class="list">
+                            <!-- 好友列表动态生成 -->
+                        </div>
+                    </div>
+                    
+                    <div id="groups-tab" class="tab-panel">
+                        <div class="list-header">
+                            <h3>群组频道</h3>
+                            <button id="create-group-btn" class="cyber-icon-btn" title="创建新频道">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                        <div id="groups-list" class="list">
+                            <!-- 群聊列表动态生成 -->
+                        </div>
+                    </div>
+                    
+                    <div id="requests-tab" class="tab-panel">
+                        <div class="list-header">
+                            <h3>验证请求</h3>
+                            <button id="refresh-requests-btn" class="cyber-icon-btn" title="刷新请求">
+                                <i class="fas fa-sync-alt"></i>
+                            </button>
+                        </div>
+                        <div id="requests-list" class="list">
+                            <!-- 好友请求列表动态生成 -->
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="sidebar-footer">
+                    <div class="connection-status">
+                        <div class="connection-dot"></div>
+                        <span id="connection-text">连接稳定</span>
+                        <div class="signal-bars">
+                            <div class="bar"></div>
+                            <div class="bar"></div>
+                            <div class="bar"></div>
+                            <div class="bar"></div>
+                        </div>
+                    </div>
+                    <div class="session-info">
+                        <span id="session-type">注册用户</span>
+                        <span class="session-timer" id="session-timer">00:00</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 聊天区域 -->
+            <div class="chat-area">
+                <div class="chat-header">
+                    <div id="chat-info">
+                        <h3 id="chat-title">选择通讯目标</h3>
+                        <div class="chat-status">
+                            <span id="online-status" class="hidden">
+                                <i class="fas fa-circle"></i> 
+                                <span>在线</span>
+                            </span>
+                            <span id="typing-status" class="typing-status hidden">
+                                <i class="fas fa-pencil-alt"></i>
+                                <span>输入中...</span>
+                            </span>
+                            <span id="group-members-count" class="group-members-count hidden">
+                                <i class="fas fa-users"></i>
+                                <span id="members-count">0</span> 成员
+                            </span>
+                        </div>
+                    </div>
+                    <div class="chat-actions">
+                        <button id="invite-to-group-btn" class="cyber-icon-btn hidden" title="邀请成员">
+                            <i class="fas fa-user-plus"></i>
+                        </button>
+                        <button id="voice-call-btn" class="cyber-icon-btn" title="语音通话">
+                            <i class="fas fa-phone"></i>
+                        </button>
+                        <button id="video-call-btn" class="cyber-icon-btn" title="视频通话">
+                            <i class="fas fa-video"></i>
+                        </button>
+                        <button id="file-share-btn" class="cyber-icon-btn" title="文件传输">
+                            <i class="fas fa-file-export"></i>
+                        </button>
+                        <button id="encrypt-btn" class="cyber-icon-btn" title="增强加密">
+                            <i class="fas fa-shield-alt"></i>
+                        </button>
+                        <button id="chat-info-btn" class="cyber-icon-btn" title="通讯详情">
+                            <i class="fas fa-info-circle"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div id="messages-container" class="messages">
+                    <div class="welcome-message">
+                        <div class="welcome-icon">
+                            <i class="fas fa-satellite"></i>
+                            <div class="orbit-ring"></div>
+                        </div>
+                        <h3>GCN“回响”通讯系统就绪</h3>
+                        <p>选择通讯目标建立安全连接</p>
+                        <div class="welcome-features">
+                            <div class="feature">
+                                <i class="fas fa-shield-alt"></i>
+                                <span>二级加密</span>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-bolt"></i>
+                                <span>实时传输</span>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-globe"></i>
+                                <span>全球覆盖</span>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-user-secret"></i>
+                                <span>完全匿名</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="message-input-container">
+                    <div class="input-actions">
+                        <button class="cyber-icon-btn" id="attachment-btn" title="附件">
+                            <i class="fas fa-paperclip"></i>
+                        </button>
+                        <button class="cyber-icon-btn" id="emoji-btn" title="表情">
+                            <i class="fas fa-smile"></i>
+                        </button>
+                        <button class="cyber-icon-btn" id="voice-msg-btn" title="语音消息">
+                            <i class="fas fa-microphone"></i>
+                        </button>
+                        <button class="cyber-icon-btn" id="screen-share-btn" title="屏幕共享">
+                            <i class="fas fa-desktop"></i>
+                        </button>
+                        <button class="cyber-icon-btn" id="code-btn" title="代码模式">
+                            <i class="fas fa-code"></i>
+                        </button>
+                    </div>
+                    <div class="input-wrapper">
+                        <input type="text" id="message-input" placeholder="输入加密消息..." disabled>
+                        <div class="input-effects"></div>
+                        <div class="encryption-indicator">
+                            <i class="fas fa-lock"></i>
+                            <span>加密</span>
+                        </div>
+                    </div>
+                    <button id="send-btn" class="cyber-send-btn" disabled>
+                        <span class="send-glow"></span>
+                        <i class="fas fa-paper-plane"></i>
+                        <div class="send-pulse"></div>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- 右侧信息面板 -->
+            <div id="info-panel" class="info-panel">
+                <div class="panel-header">
+                    <h3>通讯详情</h3>
+                    <button id="close-panel" class="cyber-icon-btn">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="panel-content">
+                    <div class="contact-info">
+                        <div class="contact-avatar">
+                            <img id="panel-avatar" src="" alt="">
+                            <div class="contact-status"></div>
+                            <div class="quantum-ring"></div>
+                        </div>
+                        <h4 id="panel-name">---</h4>
+                        <p id="panel-status" class="status-offline">离线</p>
+                        <div class="security-level">
+                            <i class="fas fa-shield-alt"></i>
+                            <span>安全级别: <strong>二级加密</strong></span>
+                        </div>
+                    </div>
+                    
+                    <div id="group-members-section" class="panel-section hidden">
+                        <h4>群组成员 <span id="members-count-badge" class="tab-badge">0</span></h4>
+                        <div id="group-members-list" class="members-list">
+                            <!-- 群组成员动态生成 -->
+                        </div>
+                    </div>
+                    
+                    <div class="panel-section">
+                        <h4>通讯统计</h4>
+                        <div class="stats">
+                            <div class="stat-item">
+                                <span class="stat-label">消息总数</span>
+                                <span class="stat-value" id="total-messages">0</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">连接时间</span>
+                                <span class="stat-value" id="connection-time">0分钟</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">加密强度</span>
+                                <span class="stat-value">二级</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">传输速度</span>
+                                <span class="stat-value">快</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="panel-section">
+                        <h4>共享文件</h4>
+                        <div id="shared-files" class="files-list">
+                            <div class="empty-files">暂无共享</div>
+                        </div>
+                    </div>
+                    
+                    <div class="panel-section">
+                        <h4>安全设置</h4>
+                        <div class="security-settings">
+                            <div class="setting-item">
+                                <span>加密</span>
+                                <div class="toggle-switch active">
+                                    <div class="toggle-slider"></div>
+                                </div>
+                            </div>
+                            <div class="setting-item">
+                                <span>消息自毁</span>
+                                <div class="toggle-switch">
+                                    <div class="toggle-slider"></div>
+                                </div>
+                            </div>
+                            <div class="setting-item">
+                                <span>密钥轮换</span>
+                                <div class="toggle-switch active">
+                                    <div class="toggle-slider"></div>
+                                </div>
+                            </div>
+                            <div class="setting-item">
+                                <span>阅读回执</span>
+                                <div class="toggle-switch active">
+                                    <div class="toggle-slider"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 搜索页面 -->
+        <div id="search-results-page" class="container hidden">
+            <div class="search-results-header">
+                <button id="back-to-chat" class="cyber-icon-btn">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <h3>搜索结果</h3>
+                <div class="search-query">搜索: <span id="search-query-text"></span></div>
+            </div>
+            <div class="search-results-container">
+                <div id="search-results-list" class="search-results-list">
+                    <!-- 搜索结果动态生成 -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 模态框容器 -->
+    <div id="modal-overlay" class="modal-overlay hidden">
+        <div class="cyber-modal">
+            <div class="modal-border"></div>
+            <div class="modal-header">
+                <h3 id="modal-title">建立连接</h3>
+                <button id="close-modal" class="cyber-icon-btn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- 模态框内容动态生成 -->
+            </div>
+        </div>
+    </div>
+
+    <!-- 编辑资料模态框 -->
+    <div id="edit-profile-modal" class="modal-overlay hidden">
+        <div class="cyber-modal">
+            <div class="modal-border"></div>
+            <div class="modal-header">
+                <h3>编辑身份</h3>
+                <button id="close-edit-modal" class="cyber-icon-btn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-input-group">
+                    <label for="edit-username">用户昵称</label>
+                    <input type="text" id="edit-username" class="modal-input" placeholder="输入新的昵称" maxlength="20">
+                </div>
+                <div class="modal-input-group">
+                    <label for="edit-avatar">头像URL</label>
+                    <input type="text" id="edit-avatar" class="modal-input" placeholder="输入头像URL（可选）">
+                </div>
+                <div class="user-id-display">
+                    <p>数字ID: <span id="display-numeric-id">加载中...</span></p>
+                    <p class="id-hint">此ID用于其他用户搜索您</p>
+                </div>
+                <div class="modal-actions">
+                    <button class="modal-btn secondary" id="cancel-edit">取消</button>
+                    <button class="modal-btn primary" id="save-profile">保存更改</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 创建群组模态框 -->
+    <div id="create-group-modal" class="modal-overlay hidden">
+        <div class="cyber-modal">
+            <div class="modal-border"></div>
+            <div class="modal-header">
+                <h3>创建新频道</h3>
+                <button id="close-create-group-modal" class="cyber-icon-btn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-input-group">
+                    <label for="group-name">频道名称</label>
+                    <input type="text" id="group-name" class="modal-input" placeholder="输入频道名称" maxlength="50">
+                </div>
+                <div class="modal-input-group">
+                    <label for="group-description">频道描述（可选）</label>
+                    <textarea id="group-description" class="modal-input" placeholder="输入频道描述" rows="3" maxlength="200"></textarea>
+                </div>
+                <div class="privacy-settings">
+                    <label class="cyber-checkbox">
+                        <input type="checkbox" id="group-public" checked>
+                        <span class="checkmark"></span>
+                        <span>公开频道（允许任何人加入）</span>
+                    </label>
+                </div>
+                <div class="modal-actions">
+                    <button class="modal-btn secondary" id="cancel-create-group">取消</button>
+                    <button class="modal-btn primary" id="create-group-btn-confirm">创建频道</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 删除群组确认模态框 -->
+    <div id="delete-group-modal" class="modal-overlay hidden">
+        <div class="cyber-modal">
+            <div class="modal-border"></div>
+            <div class="modal-header">
+                <h3>确认删除</h3>
+                <button id="close-delete-group-modal" class="cyber-icon-btn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="warning-message">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <p>您确定要删除群组 <strong id="delete-group-name">未知群组</strong> 吗？</p>
+                    <p class="warning-note">此操作不可撤销，所有群组消息将被永久删除。</p>
+                </div>
+                <div class="modal-actions">
+                    <button class="modal-btn secondary" id="cancel-delete-group">取消</button>
+                    <button class="modal-btn danger" id="confirm-delete-group">确认删除</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 忘记密码模态框 -->
+    <div id="forgot-password-modal" class="modal-overlay hidden">
+        <div class="cyber-modal">
+            <div class="modal-border"></div>
+            <div class="modal-header">
+                <h3>重置密钥</h3>
+                <button id="close-forgot-password-modal" class="cyber-icon-btn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-input-group">
+                    <label for="reset-numeric-id">您的数字ID</label>
+                    <input type="text" id="reset-numeric-id" class="modal-input" placeholder="输入8位数字ID" maxlength="8">
+                </div>
+                <div class="modal-input-group">
+                    <label for="new-password">新密钥</label>
+                    <input type="password" id="new-password" class="modal-input" placeholder="设置新密钥（至少6位）" minlength="6">
+                </div>
+                <div class="password-strength">
+                    <div class="strength-bar">
+                        <div class="strength-fill" id="reset-password-strength-fill"></div>
+                    </div>
+                    <span class="strength-text" id="reset-password-strength-text">密钥强度</span>
+                </div>
+                <div class="modal-actions">
+                    <button class="modal-btn secondary" id="cancel-reset-password">取消</button>
+                    <button class="modal-btn primary" id="confirm-reset-password">重置密钥</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 邀请好友到群组模态框 -->
+    <div id="invite-to-group-modal" class="modal-overlay hidden">
+        <div class="cyber-modal">
+            <div class="modal-border"></div>
+            <div class="modal-header">
+                <h3>邀请好友到群组</h3>
+                <button id="close-invite-modal" class="cyber-icon-btn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-input-group">
+                    <label>选择好友</label>
+                    <div id="friends-to-invite" class="friends-to-invite">
+                        <!-- 好友列表动态生成 -->
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <button class="modal-btn secondary" id="cancel-invite">取消</button>
+                    <button class="modal-btn primary" id="confirm-invite">发送邀请</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 状态菜单 -->
+    <div id="status-menu" class="status-menu hidden">
+        <div class="status-option active" data-status="online">
+            <div class="status-indicator online"></div>
+            <span>在线</span>
+        </div>
+        <div class="status-option" data-status="away">
+            <div class="status-indicator away"></div>
+            <span>暂时离开</span>
+        </div>
+        <div class="status-option" data-status="busy">
+            <div class="status-indicator busy"></div>
+            <span>忙碌</span>
+        </div>
+        <div class="status-option" data-status="invisible">
+            <div class="status-indicator invisible"></div>
+            <span>隐身</span>
+        </div>
+    </div>
+
+    <!-- 通知系统 -->
+    <div id="notification-container" class="notification-container"></div>
+
+    <!-- 量子纠缠效果 -->
+    <div id="quantum-effects" class="quantum-effects"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
