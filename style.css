@@ -1,4 +1,4 @@
-/* 通讯系统 - 移动端优化样式 - 完整修复版 */
+/* 通讯系统 - 移动端优化样式 - 修复加载界面问题 */
 * {
     margin: 0;
     padding: 0;
@@ -59,6 +59,94 @@ html {
     touch-action: pan-x pan-y;
     -webkit-user-drag: none;
     -ms-content-zooming: none;
+}
+
+/* 加载屏幕 - 默认隐藏 */
+.loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--background);
+    display: none; /* 默认隐藏 */
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    flex-direction: column;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+.loading-screen.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    display: none !important; /* 确保隐藏时完全消失 */
+}
+
+.quantum-loader {
+    text-align: center;
+}
+
+.quantum-spinner {
+    width: 60px;
+    height: 60px;
+    border: 3px solid rgba(0, 243, 255, 0.3);
+    border-top: 3px solid var(--primary);
+    border-radius: 50%;
+    animation: quantumSpin 1s linear infinite;
+    margin: 0 auto 20px;
+    position: relative;
+}
+
+.quantum-spinner::before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    right: -5px;
+    bottom: -5px;
+    border: 1px solid var(--primary);
+    border-radius: 50%;
+    animation: quantumPulse 2s ease-in-out infinite;
+}
+
+@keyframes quantumSpin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes quantumPulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.1); opacity: 0.7; }
+}
+
+.loader-text {
+    color: var(--primary);
+    font-size: 16px;
+    margin-bottom: 15px;
+    font-family: 'Orbitron', sans-serif;
+}
+
+.loader-progress {
+    width: 200px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+    width: 0%;
+    animation: loadingProgress 3s ease-in-out forwards;
+    border-radius: 2px;
+}
+
+@keyframes loadingProgress {
+    0% { width: 0%; }
+    100% { width: 100%; }
 }
 
 /* 科技背景效果 */
@@ -639,28 +727,6 @@ html {
     font-weight: bold;
 }
 
-/* 单选按钮样式 */
-.checkmark.radio {
-    border-radius: 50%;
-}
-
-.checkmark.radio::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--background);
-    opacity: 0;
-}
-
-.cyber-checkbox input[type="radio"]:checked + .checkmark.radio::after {
-    opacity: 1;
-}
-
 .forgot-password {
     color: var(--primary);
     text-decoration: none;
@@ -1156,19 +1222,6 @@ html {
     box-shadow: 0 0 12px var(--primary-glow);
 }
 
-/* 搜索选项样式 */
-.search-options {
-    display: flex;
-    gap: 15px;
-    margin-top: 10px;
-    justify-content: center;
-}
-
-.search-options .cyber-checkbox {
-    flex: 1;
-    justify-content: center;
-}
-
 .tabs {
     display: flex;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
@@ -1389,7 +1442,6 @@ html {
     font-family: 'Orbitron', monospace;
     color: var(--primary);
 }
-
 /* 聊天区域样式 */
 .chat-area {
     flex: 1;
@@ -2586,7 +2638,6 @@ html {
 .input-success + i {
     color: var(--success) !important;
 }
-
 /* 搜索结果页面样式 */
 #search-results-page {
     background: rgba(10, 10, 15, 0.95);
@@ -2839,6 +2890,10 @@ i {
 }
 
 /* 修复z-index层级 */
+.loading-screen {
+    z-index: 9999;
+}
+
 .modal-overlay {
     z-index: 1000;
 }
@@ -3070,4 +3125,41 @@ textarea:focus {
     clip: rect(0, 0, 0, 0);
     white-space: nowrap;
     border: 0;
+}
+
+/* 搜索选项样式 */
+.search-options {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 15px;
+    justify-content: center;
+}
+
+.search-options .cyber-checkbox {
+    flex: 1;
+}
+
+.checkmark.radio {
+    border-radius: 50%;
+}
+
+.checkmark.radio::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--background);
+    opacity: 0;
+}
+
+.cyber-checkbox input[type="radio"]:checked + .checkmark.radio::after {
+    opacity: 1;
+}
+
+.cyber-checkbox input[type="radio"]:checked + .checkmark.radio {
+    background: var(--primary);
 }

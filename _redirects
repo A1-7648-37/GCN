@@ -1,1 +1,13 @@
 /* /index.html 200
+
+# API 代理路由
+/api/* https://ueoplwnweruxrnpvtbdu.supabase.co/:splat 200
+
+# Supabase 认证
+/auth/* https://ueoplwnweruxrnpvtbdu.supabase.co/auth/v1/:splat 200
+
+# Supabase 实时功能
+/realtime/* https://ueoplwnweruxrnpvtbdu.supabase.co/realtime/v1/:splat 200
+
+# Supabase 存储
+/storage/* https://ueoplwnweruxrnpvtbdu.supabase.co/storage/v1/:splat 200

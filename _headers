@@ -1,20 +1,101 @@
+# 安全头 - 应用于所有路径
 /*
   X-Frame-Options: DENY
   X-XSS-Protection: 1; mode=block
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: geolocation=(), microphone=(), camera=()
+  Strict-Transport-Security: max-age=31536000; includeSubDomains
 
-/*.js
-  Cache-Control: public, max-age=31536000, immutable
+# HTML 文件 - 不缓存以确保获取最新版本
+/*.html
+  Cache-Control: no-cache, no-store, must-revalidate
+  Pragma: no-cache
+  Expires: 0
 
+# CSS 文件 - 长期缓存
 /*.css
   Cache-Control: public, max-age=31536000, immutable
 
-/*.html
+# JavaScript 文件 - 长期缓存
+/*.js
+  Cache-Control: public, max-age=31536000, immutable
+
+# 图片和字体 - 长期缓存
+/*.png
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.jpg
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.jpeg
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.gif
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.svg
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.woff
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.woff2
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.ttf
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.eot
+  Cache-Control: public, max-age=31536000, immutable
+
+# JSON 和 manifest 文件 - 中等缓存
+/*.json
   Cache-Control: public, max-age=3600
 
+/manifest.json
+  Cache-Control: public, max-age=3600
+
+# Service Worker - 不缓存
+/sw.js
+  Cache-Control: no-cache, no-store, must-revalidate
+  Service-Worker-Allowed: /
+
+# API 路由 - CORS 设置
 /api/*
   Access-Control-Allow-Origin: *
   Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS
   Access-Control-Allow-Headers: *
+  Access-Control-Max-Age: 86400
+
+# Supabase 相关路径
+/rest/*
+  Access-Control-Allow-Origin: *
+  Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS
+  Access-Control-Allow-Headers: *
+
+/auth/*
+  Access-Control-Allow-Origin: *
+  Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS
+  Access-Control-Allow-Headers: *
+
+/realtime/*
+  Access-Control-Allow-Origin: *
+  Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS
+  Access-Control-Allow-Headers: *
+
+/storage/*
+  Access-Control-Allow-Origin: *
+  Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS
+  Access-Control-Allow-Headers: *
+
+# SPA 路由 - 所有路径都返回 index.html
+/app/*
+  X-Robots-Tag: noindex
+
+/chat/*
+  X-Robots-Tag: noindex
+
+# 重定向规则（在 _redirects 中处理，这里只是备用）
+/ 200
+/index.html 200
