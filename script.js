@@ -1,5 +1,5 @@
-// 量子通讯系统 - 修复加载问题版本
-console.log('初始化通讯系统...');
+// 通讯系统 - 完整修复版
+console.log('🚀 初始化通讯系统...');
 
 // 系统状态管理
 const SYSTEM_STATE = {
@@ -80,7 +80,7 @@ const elements = {
     forgotPasswordModal: document.getElementById('forgot-password-modal')
 };
 
-// 量子加密模块
+// 加密模块
 const QuantumCrypto = {
     encryptionLevel: 5,
     
@@ -88,14 +88,14 @@ const QuantumCrypto = {
         const key = Array.from({length: 32}, () => 
             Math.floor(Math.random() * 256).toString(16).padStart(2, '0')
         ).join('');
-        console.log('生成密钥:', key.substring(0, 16) + '...');
+        console.log('🔑 生成密钥:', key.substring(0, 16) + '...');
         return key;
     },
     
     encryptMessage(message, key) {
-        // 模拟量子加密过程
+        // 模拟加密过程
         const encrypted = btoa(unescape(encodeURIComponent(message)));
-        console.log('加密消息完成');
+        console.log('🔒 加密消息完成');
         return {
             data: encrypted,
             key: key,
@@ -107,10 +107,10 @@ const QuantumCrypto = {
     decryptMessage(encryptedData, key) {
         try {
             const decrypted = decodeURIComponent(escape(atob(encryptedData.data)));
-            console.log('解密消息完成');
+            console.log('🔓 解密消息完成');
             return decrypted;
         } catch (error) {
-            console.error('解密失败:', error);
+            console.error('❌ 解密失败:', error);
             return encryptedData.data; // 返回原始数据
         }
     },
@@ -119,9 +119,9 @@ const QuantumCrypto = {
         if (this.encryptionLevel < 10) {
             this.encryptionLevel++;
             SYSTEM_STATE.quantumLevel = this.encryptionLevel;
-            console.log('加密等级提升至:', this.encryptionLevel);
+            console.log('⚡ 加密等级提升至:', this.encryptionLevel);
             
-            // 创建量子纠缠效果
+            // 创建纠缠效果
             this.createQuantumEntanglementEffect();
             
             showNotification('加密', `加密等级提升至 ${this.encryptionLevel} 级`, 'success');
@@ -165,38 +165,43 @@ const QuantumCrypto = {
     }
 };
 
-// 初始化函数 - 修复版本
+// 初始化函数 - 彻底删除加载界面
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('DOM 加载完成，直接显示认证界面...');
+    console.log('🎯 DOM 加载完成，直接显示认证界面...');
     
-    // 直接显示认证界面，跳过加载动画
-    const loadingScreen = document.getElementById('loading-screen');
-    if (loadingScreen) {
-        loadingScreen.style.display = 'none';
-    }
-    
+    // 直接显示认证界面，完全跳过加载界面
     if (elements.authContainer) {
         elements.authContainer.classList.remove('hidden');
         elements.authContainer.style.display = 'flex';
     }
     
-    console.log('系统快速启动完成');
+    // 隐藏加载界面（如果存在）
+    const loadingScreen = document.getElementById('loading-screen');
+    if (loadingScreen) {
+        loadingScreen.style.display = 'none';
+        loadingScreen.classList.add('hidden');
+    }
+    
+    console.log('✅ 系统快速启动完成');
     
     // 初始化事件监听器
     initializeEventListeners();
     
     // 创建背景粒子
     createParticles();
+    
+    // 初始化系统
+    initializeSystem();
 });
 
 // 系统初始化
 function initializeSystem() {
-    console.log('初始化通讯系统...');
+    console.log('🔧 初始化通讯系统...');
     
     // 设置移动端检测
     if (SYSTEM_STATE.isMobile) {
         document.body.classList.add('mobile');
-        console.log('移动端模式已激活');
+        console.log('📱 移动端模式已激活');
     }
     
     // 初始化触摸优化
@@ -207,9 +212,9 @@ function initializeSystem() {
     
     // 初始化Supabase客户端
     if (typeof quantumSupabase !== 'undefined') {
-        console.log('Supabase客户端已初始化');
+        console.log('✅ Supabase客户端已初始化');
     } else {
-        console.warn('Supabase客户端未找到，使用离线模式');
+        console.warn('⚠️ Supabase客户端未找到，使用离线模式');
     }
     
     // 检查本地存储的用户会话
@@ -219,7 +224,7 @@ function initializeSystem() {
     initializeUIComponents();
     
     SYSTEM_STATE.isInitialized = true;
-    console.log('系统初始化完成');
+    console.log('✅ 系统初始化完成');
 }
 
 // 修复输入法键盘自动弹出问题
@@ -253,7 +258,7 @@ function initializeTouchOptimization() {
 
 // 修复跨设备访问配置
 function configureCrossDeviceAccess() {
-    console.log('配置跨设备访问...');
+    console.log('🌐 配置跨设备访问...');
     
     // 配置响应式设计
     configureResponsiveDesign();
@@ -269,7 +274,7 @@ function configureResponsiveDesign() {
         if (isMobile !== SYSTEM_STATE.isMobile) {
             SYSTEM_STATE.isMobile = isMobile;
             document.body.classList.toggle('mobile', isMobile);
-            console.log('设备类型变更:', isMobile ? '移动端' : '桌面端');
+            console.log('📱 设备类型变更:', isMobile ? '移动端' : '桌面端');
         }
     }
     
@@ -324,22 +329,22 @@ function checkExistingSession() {
         if (savedSession) {
             const session = JSON.parse(savedSession);
             if (session.expires > Date.now()) {
-                console.log('发现有效会话，自动登录...');
+                console.log('🔍 发现有效会话，自动登录...');
                 // 这里可以添加自动登录逻辑
             } else {
                 localStorage.removeItem('quantum_chat_session');
-                console.log('会话已过期，已清除');
+                console.log('🗑️ 会话已过期，已清除');
             }
         }
     } catch (error) {
-        console.error('检查会话失败:', error);
+        console.error('❌ 检查会话失败:', error);
         localStorage.removeItem('quantum_chat_session');
     }
 }
 
 // 初始化UI组件
 function initializeUIComponents() {
-    console.log('初始化UI组件...');
+    console.log('🎨 初始化UI组件...');
     
     // 生成初始数字ID
     generateNumericId();
@@ -354,12 +359,12 @@ function initializeUIComponents() {
     initializeFeatureButtons();
     
     SYSTEM_STATE.isInitialized = true;
-    console.log('UI组件初始化完成');
+    console.log('✅ UI组件初始化完成');
 }
 
 // 初始化事件监听器
 function initializeEventListeners() {
-    console.log('初始化事件监听器...');
+    console.log('🎮 初始化事件监听器...');
     
     // 认证标签页切换
     if (elements.loginTabBtn) {
@@ -526,12 +531,20 @@ function initializeEventListeners() {
     sidebarTabButtons.forEach(btn => {
         btn.addEventListener('click', function() {
             const tab = this.getAttribute('data-tab');
-            console.log('点击侧边栏标签:', tab);
+            console.log('📑 点击侧边栏标签:', tab);
             switchSidebarTab(tab);
         });
     });
     
-    console.log('事件监听器初始化完成');
+    // 添加搜索选项切换事件
+    const searchTypeRadios = document.querySelectorAll('input[name="search-type"]');
+    searchTypeRadios.forEach(radio => {
+        radio.addEventListener('change', function() {
+            console.log('🔍 搜索类型切换为:', this.value);
+        });
+    });
+    
+    console.log('✅ 事件监听器初始化完成');
 }
 
 // 显示认证屏幕
@@ -539,7 +552,7 @@ function showAuthScreen() {
     if (elements.authContainer) {
         elements.authContainer.classList.remove('hidden');
         elements.authContainer.style.display = 'flex';
-        console.log('认证屏幕已显示');
+        console.log('🔐 认证屏幕已显示');
     }
 }
 
@@ -557,12 +570,12 @@ function showChatInterface() {
     // 加载用户数据
     loadUserData();
     
-    console.log('聊天界面已显示');
+    console.log('💬 聊天界面已显示');
 }
 
 // 标签页切换
 function switchAuthTab(tab) {
-    console.log('切换标签页:', tab);
+    console.log('📑 切换标签页:', tab);
     
     // 更新标签按钮状态
     document.querySelectorAll('.auth-tabs .cyber-tab').forEach(btn => {
@@ -589,7 +602,7 @@ function initializeTabSwitching() {
     tabButtons.forEach(btn => {
         btn.addEventListener('click', function() {
             const tab = this.getAttribute('data-tab');
-            console.log('点击侧边栏标签:', tab);
+            console.log('📑 点击侧边栏标签:', tab);
             switchSidebarTab(tab);
         });
     });
@@ -597,7 +610,7 @@ function initializeTabSwitching() {
 
 // 切换侧边栏标签页
 function switchSidebarTab(tab) {
-    console.log('切换侧边栏标签:', tab);
+    console.log('📑 切换侧边栏标签:', tab);
     
     // 更新标签按钮状态
     document.querySelectorAll('.tabs .tab-btn').forEach(btn => {
@@ -613,25 +626,25 @@ function switchSidebarTab(tab) {
     
     if (activeTabBtn) {
         activeTabBtn.classList.add('active');
-        console.log('激活标签按钮:', tab);
+        console.log('✅ 激活标签按钮:', tab);
     }
     if (activePanel) {
         activePanel.classList.add('active');
-        console.log('激活标签面板:', tab);
+        console.log('✅ 激活标签面板:', tab);
     }
     
     // 加载对应标签的数据
     switch (tab) {
         case 'friends':
-            console.log('加载好友列表');
+            console.log('👥 加载好友列表');
             loadFriends();
             break;
         case 'groups':
-            console.log('加载群组列表');
+            console.log('👥 加载群组列表');
             loadGroups();
             break;
         case 'requests':
-            console.log('加载好友请求');
+            console.log('📨 加载好友请求');
             loadFriendRequests();
             break;
     }
@@ -643,7 +656,7 @@ function generateNumericId() {
     if (elements.generatedNumericId) {
         elements.generatedNumericId.textContent = numericId;
     }
-    console.log('生成数字ID:', numericId);
+    console.log('🆔 生成数字ID:', numericId);
     return numericId;
 }
 
@@ -768,6 +781,11 @@ function setButtonLoading(button, isLoading) {
     } else {
         button.disabled = false;
         // 需要根据具体按钮恢复原始内容
+        if (button.id === 'login-btn') {
+            button.innerHTML = '<span class="btn-glow"></span><i class="fas fa-sign-in-alt"></i><span>验证身份</span>';
+        } else if (button.id === 'signup-btn') {
+            button.innerHTML = '<span class="btn-glow"></span><i class="fas fa-user-shield"></i><span>创建加密身份</span>';
+        }
     }
 }
 
@@ -789,7 +807,7 @@ async function handleLogin() {
     try {
         setButtonLoading(elements.loginBtn, true);
         
-        console.log('尝试登录:', numericId);
+        console.log('🔐 尝试登录:', numericId);
         
         // 模拟登录过程
         await new Promise(resolve => setTimeout(resolve, 1500));
@@ -820,14 +838,14 @@ async function handleLogin() {
         showAuthMessage('身份验证成功', 'success');
         
     } catch (error) {
-        console.error('登录失败:', error);
+        console.error('❌ 登录失败:', error);
         showAuthMessage('身份验证失败: ' + error.message, 'error');
     } finally {
         setButtonLoading(elements.loginBtn, false);
     }
 }
 
-// 处理注册
+// 处理注册 - 修复数字ID显示问题
 async function handleSignup() {
     const username = elements.signupUsername?.value.trim();
     const password = elements.signupPassword?.value;
@@ -863,7 +881,7 @@ async function handleSignup() {
     try {
         setButtonLoading(elements.signupBtn, true);
         
-        console.log('注册新用户:', username, numericId);
+        console.log('📝 注册新用户:', username, numericId);
         
         // 模拟注册过程
         await new Promise(resolve => setTimeout(resolve, 2000));
@@ -879,7 +897,7 @@ async function handleSignup() {
         userProfile = {
             id: currentUser.id,
             username: username,
-            numeric_id: numericId, // 确保这里设置了numeric_id
+            numeric_id: numericId,
             avatar_url: `https://ui-avatars.com/api/?name=${encodeURIComponent(username)}&background=0D8ABC&color=fff`,
             status: 'online',
             quantum_level: 5
@@ -894,7 +912,7 @@ async function handleSignup() {
         showAuthMessage('身份创建成功', 'success');
         
     } catch (error) {
-        console.error('注册失败:', error);
+        console.error('❌ 注册失败:', error);
         showAuthMessage('身份创建失败: ' + error.message, 'error');
     } finally {
         setButtonLoading(elements.signupBtn, false);
@@ -906,7 +924,7 @@ async function handleAnonymousLogin() {
     try {
         setButtonLoading(elements.anonymousLoginBtn, true);
         
-        console.log('匿名登录...');
+        console.log('👤 匿名登录...');
         
         // 模拟匿名登录
         await new Promise(resolve => setTimeout(resolve, 1000));
@@ -941,7 +959,7 @@ async function handleAnonymousLogin() {
         showNotification('匿名模式', '匿名会话已激活', 'success');
         
     } catch (error) {
-        console.error('匿名登录失败:', error);
+        console.error('❌ 匿名登录失败:', error);
         showAuthMessage('匿名会话创建失败', 'error');
     } finally {
         setButtonLoading(elements.anonymousLoginBtn, false);
@@ -973,9 +991,9 @@ function saveSessionToStorage() {
         };
         
         localStorage.setItem('quantum_chat_session', JSON.stringify(sessionData));
-        console.log('会话已保存到本地存储');
+        console.log('💾 会话已保存到本地存储');
     } catch (error) {
-        console.error('保存会话失败:', error);
+        console.error('❌ 保存会话失败:', error);
     }
 }
 
@@ -983,7 +1001,7 @@ function saveSessionToStorage() {
 async function loadUserData() {
     if (!currentUser) return;
     
-    console.log('加载用户数据...');
+    console.log('👤 加载用户数据...');
     
     // 更新用户界面
     updateUserInterface();
@@ -1000,7 +1018,7 @@ async function loadUserData() {
     // 加载好友请求
     await loadFriendRequests();
     
-    console.log('用户数据加载完成');
+    console.log('✅ 用户数据加载完成');
 }
 
 // 更新用户界面
@@ -1135,14 +1153,14 @@ async function saveUserProfile() {
         closeAllModals();
         
     } catch (error) {
-        console.error('保存用户资料失败:', error);
+        console.error('❌ 保存用户资料失败:', error);
         showNotification('保存失败', '资料更新失败: ' + error.message, 'error');
     }
 }
 
 // 处理退出登录
 function handleLogout() {
-    console.log('用户退出登录');
+    console.log('🚪 用户退出登录');
     
     // 停止会话计时器
     stopSessionTimer();
@@ -1182,7 +1200,7 @@ function handleLogout() {
 
 // 显示添加好友模态框
 function showAddFriendModal() {
-    console.log('打开添加好友模态框');
+    console.log('👥 打开添加好友模态框');
     
     const modal = document.getElementById('modal-overlay');
     const modalBody = document.querySelector('.modal-body');
@@ -1196,9 +1214,21 @@ function showAddFriendModal() {
     modalTitle.textContent = '建立连接';
     
     modalBody.innerHTML = `
+        <div class="search-options">
+            <label class="cyber-checkbox">
+                <input type="radio" name="search-type" value="username" checked>
+                <span class="checkmark radio"></span>
+                <span>搜索用户名</span>
+            </label>
+            <label class="cyber-checkbox">
+                <input type="radio" name="search-type" value="id">
+                <span class="checkmark radio"></span>
+                <span>搜索数字ID</span>
+            </label>
+        </div>
         <div class="modal-input-group">
-            <label for="search-user">搜索用户ID或昵称</label>
-            <input type="text" id="search-user" class="modal-input" placeholder="输入8位数字ID或用户昵称">
+            <label for="search-user">搜索用户</label>
+            <input type="text" id="search-user" class="modal-input" placeholder="输入用户名或8位数字ID">
             <div id="search-results" class="search-results"></div>
         </div>
         <div class="modal-actions">
@@ -1248,81 +1278,10 @@ async function searchQuantumUsers() {
     try {
         resultsContainer.innerHTML = '<div class="no-results">搜索中...</div>';
         
-        // 模拟搜索延迟
-        setTimeout(() => {
-            const mockResults = [
-                {
-                    id: 'quantum-user-1',
-                    username: '示例用户',
-                    numeric_id: '10000002',
-                    avatar_url: 'https://ui-avatars.com/api/?name=示例用户&background=0D8ABC&color=fff',
-                    status: 'online',
-                    quantum_level: 5
-                }
-            ];
-            
-            // 过滤结果
-            const filteredResults = mockResults.filter(user => 
-                user.username.includes(query) || 
-                user.numeric_id.includes(query)
-            );
-            
-            if (filteredResults.length === 0) {
-                resultsContainer.innerHTML = '<div class="no-results">未找到匹配的用户</div>';
-                return;
-            }
-            
-            resultsContainer.innerHTML = '';
-            
-            filteredResults.forEach(user => {
-                const userEl = document.createElement('div');
-                userEl.className = 'user-search-result';
-                userEl.innerHTML = `
-                    <img src="${user.avatar_url}" alt="${user.username}">
-                    <div class="user-info">
-                        <div class="user-name">${user.username}</div>
-                        <div class="user-id">ID: ${user.numeric_id}</div>
-                        <div class="user-status">${user.status === 'online' ? '在线' : '离线'} | 等级: ${user.quantum_level}</div>
-                    </div>
-                    <button class="add-user-btn" data-user-id="${user.id}">连接</button>
-                `;
-                
-                resultsContainer.appendChild(userEl);
-            });
-            
-            // 添加连接按钮事件
-            document.querySelectorAll('.add-user-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const userId = this.getAttribute('data-user-id');
-                    sendQuantumFriendRequest(userId);
-                });
-            });
-            
-        }, 1500);
-        
-    } catch (error) {
-        console.error('搜索用户失败:', error);
-        resultsContainer.innerHTML = '<div class="no-results">搜索失败，请重试</div>';
-    }
-}
-
-// 新增用户搜索功能
-async function handleUserSearch(query) {
-    if (!query.trim()) {
-        showNotification('搜索', '请输入搜索内容', 'info');
-        return;
-    }
-    
-    console.log('搜索用户:', query);
-    
-    try {
-        // 显示搜索页面
-        showSearchResultsPage(query);
+        // 获取搜索类型
+        const searchType = document.querySelector('input[name="search-type"]:checked')?.value || 'username';
         
         let searchResults = [];
-        
-        // 根据搜索类型过滤结果
-        const searchType = document.querySelector('input[name="search-type"]:checked')?.value || 'username';
         
         if (searchType === 'id') {
             // 精确搜索数字ID
@@ -1332,12 +1291,47 @@ async function handleUserSearch(query) {
             searchResults = await searchUsersByUsername(query);
         }
         
-        renderSearchResults(searchResults, query, searchType);
+        if (searchResults.length === 0) {
+            let noResultsMessage = '';
+            if (searchType === 'id') {
+                noResultsMessage = `没有找到ID为 "<strong>${query}</strong>" 的用户`;
+            } else {
+                noResultsMessage = `没有找到用户名包含 "<strong>${query}</strong>" 的用户`;
+            }
+            
+            resultsContainer.innerHTML = `<div class="no-results">${noResultsMessage}</div>`;
+            return;
+        }
+        
+        resultsContainer.innerHTML = '';
+        
+        searchResults.forEach(user => {
+            const userEl = document.createElement('div');
+            userEl.className = 'user-search-result';
+            userEl.innerHTML = `
+                <img src="${user.avatar_url}" alt="${user.username}">
+                <div class="user-info">
+                    <div class="user-name">${user.username}</div>
+                    <div class="user-id">ID: ${user.numeric_id}</div>
+                    <div class="user-status">${user.status === 'online' ? '在线' : '离线'} | 等级: ${user.quantum_level}</div>
+                </div>
+                <button class="add-user-btn" data-user-id="${user.id}">连接</button>
+            `;
+            
+            resultsContainer.appendChild(userEl);
+        });
+        
+        // 添加连接按钮事件
+        document.querySelectorAll('.add-user-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const userId = this.getAttribute('data-user-id');
+                sendQuantumFriendRequest(userId);
+            });
+        });
         
     } catch (error) {
-        console.error('搜索失败:', error);
-        showNotification('搜索失败', '搜索过程中出现错误', 'error');
-        renderSearchResults([], query);
+        console.error('❌ 搜索用户失败:', error);
+        resultsContainer.innerHTML = '<div class="no-results">搜索失败，请重试</div>';
     }
 }
 
@@ -1382,7 +1376,7 @@ async function searchUsersByUsername(username) {
                 },
                 {
                     id: 'search-user-2',
-                    username: `量子${username}`,
+                    username: `${username}`,
                     numeric_id: String(Math.floor(Math.random() * 90000000) + 10000000),
                     avatar_url: `https://ui-avatars.com/api/?name=${encodeURIComponent(username)}&background=9d4edd&color=fff`,
                     status: 'offline',
@@ -1398,6 +1392,41 @@ async function searchUsersByUsername(username) {
             resolve(filteredResults);
         }, 800);
     });
+}
+
+// 新增用户搜索功能
+async function handleUserSearch(query) {
+    if (!query.trim()) {
+        showNotification('搜索', '请输入搜索内容', 'info');
+        return;
+    }
+    
+    console.log('🔍 搜索用户:', query);
+    
+    try {
+        // 显示搜索页面
+        showSearchResultsPage(query);
+        
+        let searchResults = [];
+        
+        // 获取搜索类型
+        const searchType = document.querySelector('input[name="search-type"]:checked')?.value || 'username';
+        
+        if (searchType === 'id') {
+            // 精确搜索数字ID
+            searchResults = await searchUsersByNumericId(query);
+        } else {
+            // 模糊搜索用户名
+            searchResults = await searchUsersByUsername(query);
+        }
+        
+        renderSearchResults(searchResults, query, searchType);
+        
+    } catch (error) {
+        console.error('❌ 搜索失败:', error);
+        showNotification('搜索失败', '搜索过程中出现错误', 'error');
+        renderSearchResults([], query);
+    }
 }
 
 // 显示搜索结果页面
@@ -1420,7 +1449,7 @@ function showSearchResultsPage(query) {
     }
 }
 
-// 更新渲染搜索结果函数
+// 渲染搜索结果
 function renderSearchResults(results, query, searchType) {
     const resultsList = document.getElementById('search-results-list');
     if (!resultsList) return;
@@ -1479,7 +1508,7 @@ function renderSearchResults(results, query, searchType) {
             <div class="search-result-info">
                 <div class="search-result-name">${user.username}</div>
                 <div class="search-result-id">ID: ${user.numeric_id}</div>
-                <div class="search-result-status">量子等级: ${user.quantum_level || 5} | 状态: ${user.status || '离线'}</div>
+                <div class="search-result-status">等级: ${user.quantum_level || 5} | 状态: ${user.status || '离线'}</div>
             </div>
             <button class="${buttonClass}" data-user-id="${user.id}" ${isFriend || isPending ? 'disabled' : ''}>
                 ${buttonText}
@@ -1505,7 +1534,7 @@ function renderSearchResults(results, query, searchType) {
 // 修复好友请求发送功能
 async function sendFriendRequest(friendId) {
     try {
-        console.log('发送好友请求给:', friendId);
+        console.log('📨 发送好友请求给:', friendId);
         
         // 创建好友请求对象
         const friendRequest = {
@@ -1528,13 +1557,13 @@ async function sendFriendRequest(friendId) {
         // 更新UI
         updateRequestsBadge();
         
-        // 创建量子纠缠效果
+        // 创建纠缠效果
         QuantumCrypto.createQuantumEntanglementEffect();
         
         showNotification('连接请求', '好友请求已通过通道发送', 'success');
         
     } catch (error) {
-        console.error('发送好友请求失败:', error);
+        console.error('❌ 发送好友请求失败:', error);
         showNotification('请求失败', '发送好友请求时出现错误', 'error');
     }
 }
@@ -1542,9 +1571,9 @@ async function sendFriendRequest(friendId) {
 // 发送好友请求
 async function sendQuantumFriendRequest(friendId) {
     try {
-        console.log('发送好友请求给:', friendId);
+        console.log('📨 发送好友请求给:', friendId);
         
-        // 创建量子纠缠效果
+        // 创建纠缠效果
         QuantumCrypto.createQuantumEntanglementEffect();
         
         showNotification('连接', '好友请求已通过通道发送', 'success');
@@ -1556,18 +1585,18 @@ async function sendQuantumFriendRequest(friendId) {
         }, 2000);
         
     } catch (error) {
-        console.error('发送好友请求失败:', error);
+        console.error('❌ 发送好友请求失败:', error);
         showNotification('请求失败', '连接建立失败', 'error');
     }
 }
 
 // 显示创建群组模态框
 function showCreateGroupModal() {
-    console.log('打开创建群组模态框');
+    console.log('👥 打开创建群组模态框');
     
     const modal = document.getElementById('create-group-modal');
     if (!modal) {
-        console.error('创建群组模态框未找到');
+        console.error('❌ 创建群组模态框未找到');
         return;
     }
     
@@ -1581,7 +1610,7 @@ function showCreateGroupModal() {
     modal.classList.remove('hidden');
 }
 
-// 创建量子群组
+// 创建群组
 async function createGroup() {
     const groupNameInput = document.getElementById('group-name');
     const groupDescriptionInput = document.getElementById('group-description');
@@ -1597,7 +1626,7 @@ async function createGroup() {
     try {
         setButtonLoading(document.getElementById('create-group-btn-confirm'), true);
         
-        console.log('创建群组:', groupName);
+        console.log('📝 创建群组:', groupName);
         
         // 生成群组ID和头像
         const groupId = 'quantum-group-' + Date.now();
@@ -1620,7 +1649,7 @@ async function createGroup() {
         // 添加到当前群组列表
         groups.push(newGroup);
         
-        // 创建量子群组效果
+        // 创建群组效果
         QuantumCrypto.createQuantumEntanglementEffect();
         
         // 更新UI
@@ -1636,7 +1665,7 @@ async function createGroup() {
         }, 1000);
         
     } catch (error) {
-        console.error('创建群组失败:', error);
+        console.error('❌ 创建群组失败:', error);
         showNotification('创建失败', '频道创建失败: ' + error.message, 'error');
     } finally {
         setButtonLoading(document.getElementById('create-group-btn-confirm'), false);
@@ -1655,9 +1684,9 @@ function saveGroupToStorage(group) {
         // 保存回本地存储
         localStorage.setItem('quantum_chat_groups', JSON.stringify(storedGroups));
         
-        console.log('群组已保存到本地存储:', group.name);
+        console.log('💾 群组已保存到本地存储:', group.name);
     } catch (error) {
-        console.error('保存群组到本地存储失败:', error);
+        console.error('❌ 保存群组到本地存储失败:', error);
     }
 }
 
@@ -1665,10 +1694,10 @@ function saveGroupToStorage(group) {
 function loadGroupsFromStorage() {
     try {
         const storedGroups = JSON.parse(localStorage.getItem('quantum_chat_groups') || '[]');
-        console.log('从本地存储加载群组:', storedGroups.length);
+        console.log('📂 从本地存储加载群组:', storedGroups.length);
         return storedGroups;
     } catch (error) {
-        console.error('从本地存储加载群组失败:', error);
+        console.error('❌ 从本地存储加载群组失败:', error);
         return [];
     }
 }
@@ -1678,7 +1707,7 @@ function deleteGroup() {
     if (!groupToDelete) return;
     
     try {
-        console.log('删除群组:', groupToDelete.name);
+        console.log('🗑️ 删除群组:', groupToDelete.name);
         
         // 从本地存储中删除
         const storedGroups = JSON.parse(localStorage.getItem('quantum_chat_groups') || '[]');
@@ -1706,7 +1735,7 @@ function deleteGroup() {
         groupToDelete = null;
         
     } catch (error) {
-        console.error('删除群组失败:', error);
+        console.error('❌ 删除群组失败:', error);
         showNotification('删除失败', '频道删除失败: ' + error.message, 'error');
     }
 }
@@ -1719,7 +1748,7 @@ function showDeleteGroupModal(group) {
     const deleteGroupName = document.getElementById('delete-group-name');
     
     if (!modal || !deleteGroupName) {
-        console.error('删除群组模态框未找到');
+        console.error('❌ 删除群组模态框未找到');
         return;
     }
     
@@ -1729,11 +1758,11 @@ function showDeleteGroupModal(group) {
 
 // 显示忘记密码模态框
 function showForgotPasswordModal() {
-    console.log('打开忘记密码模态框');
+    console.log('🔑 打开忘记密码模态框');
     
     const modal = document.getElementById('forgot-password-modal');
     if (!modal) {
-        console.error('忘记密码模态框未找到');
+        console.error('❌ 忘记密码模态框未找到');
         return;
     }
     
@@ -1770,7 +1799,7 @@ async function handleResetPassword() {
     try {
         setButtonLoading(document.getElementById('confirm-reset-password'), true);
         
-        console.log('重置密码:', numericId);
+        console.log('🔑 重置密码:', numericId);
         
         // 模拟重置过程
         await new Promise(resolve => setTimeout(resolve, 2000));
@@ -1782,21 +1811,11 @@ async function handleResetPassword() {
         switchAuthTab('login');
         
     } catch (error) {
-        console.error('重置密码失败:', error);
+        console.error('❌ 重置密码失败:', error);
         showNotification('重置失败', '密钥重置失败: ' + error.message, 'error');
     } finally {
         setButtonLoading(document.getElementById('confirm-reset-password'), false);
     }
-}
-
-// 显示服务条款模态框
-function showTermsModal() {
-    showNotification('服务条款', '通讯服务条款内容加载中...', 'info');
-}
-
-// 显示隐私政策模态框
-function showPrivacyModal() {
-    showNotification('隐私政策', '通讯隐私政策内容加载中...', 'info');
 }
 
 // 好友功能
@@ -1804,7 +1823,7 @@ async function loadFriends() {
     if (!currentUser) return;
     
     try {
-        console.log('加载好友列表...');
+        console.log('👥 加载好友列表...');
         
         // 模拟数据 - 确保界面能正常显示
         friends = [
@@ -1838,12 +1857,12 @@ async function loadFriends() {
             }
         ];
         
-        console.log(`好友列表加载完成: ${friends.length} 位好友`);
+        console.log(`✅ 好友列表加载完成: ${friends.length} 位好友`);
         updateFriendsBadge();
         renderFriendsList();
         
     } catch (error) {
-        console.error('加载好友异常:', error);
+        console.error('💥 加载好友异常:', error);
         // 使用模拟数据确保界面正常
         friends = [];
         updateFriendsBadge();
@@ -1930,7 +1949,7 @@ async function loadGroups() {
     if (!currentUser) return;
     
     try {
-        console.log('加载群聊列表...');
+        console.log('👥 加载群聊列表...');
         
         // 从本地存储加载群组
         const storedGroups = loadGroupsFromStorage();
@@ -1951,12 +1970,12 @@ async function loadGroups() {
             ...storedGroups
         ];
         
-        console.log(`群聊列表加载完成: ${groups.length} 个群组`);
+        console.log(`✅ 群聊列表加载完成: ${groups.length} 个群组`);
         updateGroupsBadge();
         renderGroupsList();
         
     } catch (error) {
-        console.error('加载群聊异常:', error);
+        console.error('💥 加载群聊异常:', error);
         groups = [
             {
                 id: 'quantum-welcome-group',
@@ -2057,7 +2076,7 @@ async function loadFriendRequests() {
     if (!currentUser) return;
     
     try {
-        console.log('加载好友请求...');
+        console.log('📨 加载好友请求...');
         
         // 模拟好友请求数据
         friendRequests = [
@@ -2076,12 +2095,12 @@ async function loadFriendRequests() {
             }
         ];
         
-        console.log(`好友请求加载完成: ${friendRequests.length} 个请求`);
+        console.log(`✅ 好友请求加载完成: ${friendRequests.length} 个请求`);
         updateRequestsBadge();
         renderFriendRequests();
         
     } catch (error) {
-        console.error('加载好友请求异常:', error);
+        console.error('💥 加载好友请求异常:', error);
         friendRequests = [];
         updateRequestsBadge();
         renderFriendRequests();
@@ -2159,7 +2178,7 @@ function acceptFriendRequest(requestId) {
     const request = friendRequests.find(req => req.id === requestId);
     if (!request) return;
     
-    console.log('接受好友请求:', request.from_user.username);
+    console.log('✅ 接受好友请求:', request.from_user.username);
     
     // 添加到好友列表
     friends.push({
@@ -2180,7 +2199,7 @@ function acceptFriendRequest(requestId) {
     
     showNotification('连接建立', `已与 ${request.from_user.username} 建立连接`, 'success');
     
-    // 创建量子纠缠效果
+    // 创建纠缠效果
     QuantumCrypto.createQuantumEntanglementEffect();
 }
 
@@ -2189,7 +2208,7 @@ function declineFriendRequest(requestId) {
     const request = friendRequests.find(req => req.id === requestId);
     if (!request) return;
     
-    console.log('拒绝好友请求:', request.from_user.username);
+    console.log('❌ 拒绝好友请求:', request.from_user.username);
     
     // 从请求列表中移除
     friendRequests = friendRequests.filter(req => req.id !== requestId);
@@ -2205,7 +2224,7 @@ function declineFriendRequest(requestId) {
 async function openQuantumChat(chatId, type, name) {
     if (!currentUser) return;
     
-    console.log(`打开“回响”聊天: ${name}, 类型: ${type}, ID: ${chatId}`);
+    console.log(`💬 打开聊天: ${name}, 类型: ${type}, ID: ${chatId}`);
     
     currentChat = chatId;
     chatType = type;
@@ -2229,7 +2248,7 @@ async function openQuantumChat(chatId, type, name) {
     // 启用消息输入
     if (elements.messageInput) {
         elements.messageInput.disabled = false;
-        elements.messageInput.placeholder = `发送量子加密消息给 ${name}...`;
+        elements.messageInput.placeholder = `发送加密消息给 ${name}...`;
         elements.messageInput.focus();
     }
     
@@ -2243,31 +2262,31 @@ async function openQuantumChat(chatId, type, name) {
     // 更新活跃状态
     updateQuantumActiveChatState(chatId, type);
     
-    showNotification('通道', `与 ${name} 的通道已激活`, 'success');
+    showNotification('通道', `与 ${name} 的安全通道已激活`, 'success');
 }
 
 async function loadQuantumMessages() {
     if (!currentChat || !currentUser) return;
     
     try {
-        console.log('加载消息历史...');
+        console.log('📨 加载消息历史...');
         
         // 从本地存储加载消息
         const storedMessages = loadQuantumMessagesFromStorage(currentChat);
         
         if (storedMessages.length > 0) {
             currentMessages = storedMessages;
-            console.log(`从存储加载消息: ${currentMessages.length} 条消息`);
+            console.log(`✅ 从存储加载消息: ${currentMessages.length} 条消息`);
         } else {
             // 生成初始消息数据
             currentMessages = generateInitialMessages();
-            console.log(`生成初始消息: ${currentMessages.length} 条消息`);
+            console.log(`✅ 生成初始消息: ${currentMessages.length} 条消息`);
         }
         
         renderQuantumMessages(currentMessages);
         
     } catch (error) {
-        console.error('加载消息异常:', error);
+        console.error('💥 加载消息异常:', error);
         currentMessages = [];
         renderQuantumMessages([]);
     }
@@ -2309,7 +2328,7 @@ function generateInitialMessages() {
         messages.push({
             id: 'quantum-msg-3',
             sender_id: 'quantum-system',
-            content: '通讯特性：\n• 端到端加密\n• 实时消息传输\n• 完全匿名模式\n• 自毁消息功能',
+            content: '💫 通讯特性：\n• 端到端加密\n• 实时消息传输\n• 完全匿名模式\n• 自毁消息功能',
             created_at: new Date().toISOString(),
             sender: {
                 username: '系统助手'
@@ -2328,7 +2347,7 @@ function loadQuantumMessagesFromStorage(chatId) {
         const storedMessages = JSON.parse(localStorage.getItem(`quantum_chat_messages_${chatId}`) || '[]');
         return storedMessages;
     } catch (error) {
-        console.error('从本地存储加载消息失败:', error);
+        console.error('❌ 从本地存储加载消息失败:', error);
         return [];
     }
 }
@@ -2338,7 +2357,7 @@ function saveQuantumMessagesToStorage(chatId, messages) {
     try {
         localStorage.setItem(`quantum_chat_messages_${chatId}`, JSON.stringify(messages));
     } catch (error) {
-        console.error('保存消息到本地存储失败:', error);
+        console.error('❌ 保存消息到本地存储失败:', error);
     }
 }
 
@@ -2348,7 +2367,7 @@ function renderQuantumMessages(messages) {
     elements.messagesContainer.innerHTML = '';
     
     if (messages.length === 0) {
-        let welcomeText = `这是您与 ${currentChatName} 的通讯开始`;
+        let welcomeText = `这是您与 ${currentChatName} 的安全通讯开始`;
         if (SYSTEM_STATE.isAnonymous) {
             welcomeText = `匿名模式 - 与 ${currentChatName} 的临时通讯`;
         }
@@ -2372,7 +2391,7 @@ function renderQuantumMessages(messages) {
                     </div>
                     <div class="feature">
                         <i class="fas fa-globe"></i>
-                        <span>量子纠缠</span>
+                        <span>纠缠</span>
                     </div>
                     <div class="feature">
                         <i class="fas fa-user-secret"></i>
@@ -2419,6 +2438,7 @@ function renderQuantumMessages(messages) {
     elements.messagesContainer.scrollTop = elements.messagesContainer.scrollHeight;
 }
 
+// 修复消息发送函数 - 去除群聊自动回复
 async function sendQuantumMessage() {
     if (!elements.messageInput || !currentChat || !currentUser) return;
     
@@ -2428,7 +2448,7 @@ async function sendQuantumMessage() {
         return;
     }
     
-    console.log('发送消息:', content);
+    console.log('📤 发送消息:', content);
     
     // 生成密钥并加密消息
     const quantumKey = QuantumCrypto.generateQuantumKey();
@@ -2475,13 +2495,7 @@ async function sendQuantumMessage() {
         QuantumCrypto.enhanceEncryption();
     }
     
-    // 删除或注释掉群聊自动回复
-    /*
-    // 如果是群聊，模拟其他用户回复
-    if (chatType === 'group' && Math.random() > 0.5) {
-        simulateGroupReply();
-    }
-    */
+    // 已删除群聊自动回复功能
 }
 
 function updateQuantumActiveChatState(chatId, type) {
@@ -2530,7 +2544,7 @@ function resetChatInterface() {
                     <i class="fas fa-satellite"></i>
                     <div class="orbit-ring"></div>
                 </div>
-                <h3>GCN“回响”通讯系统就绪</h3>
+                <h3>通讯系统就绪</h3>
                 <p>选择通讯目标建立安全连接</p>
                 <div class="welcome-features">
                     <div class="feature">
@@ -2557,7 +2571,7 @@ function resetChatInterface() {
 
 // 初始化其他功能按钮
 function initializeFeatureButtons() {
-    console.log('初始化功能按钮...');
+    console.log('🔧 初始化功能按钮...');
     
     // 状态按钮
     const statusBtn = document.getElementById('status-btn');
@@ -2647,7 +2661,7 @@ function setQuantumUserStatus(status) {
         }
     });
     
-    showNotification('状态更新', `量子状态已设置为: ${getQuantumStatusText(status)}`, 'success');
+    showNotification('状态更新', `状态已设置为: ${getQuantumStatusText(status)}`, 'success');
 }
 
 function getQuantumStatusText(status) {
@@ -2664,11 +2678,6 @@ function getQuantumStatusText(status) {
 function showNotification(title, message, type = 'info') {
     const container = document.getElementById('notification-container');
     if (!container) return;
-    
-    // 限制通知数量
-    if (container.children.length > 3) {
-        container.removeChild(container.firstChild);
-    }
     
     const notification = document.createElement('div');
     notification.className = `cyber-notification ${type}`;
@@ -2784,4 +2793,4 @@ function escapeHtml(unsafe) {
         .replace(/'/g, "&#039;");
 }
 
-console.log('GCN回响通讯系统初始化完成!');
+console.log('🎉 GCN回响通讯系统初始化完成!');
